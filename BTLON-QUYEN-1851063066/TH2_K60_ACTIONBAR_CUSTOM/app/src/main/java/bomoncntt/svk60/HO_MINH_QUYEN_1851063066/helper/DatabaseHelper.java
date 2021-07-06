@@ -72,6 +72,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    public boolean insertData(String masv,String tensv,String gt,String lop){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(col_masv,masv);
+        cv.put(col_tensv,tensv);
+        cv.put(col_gt,gt);
+        cv.put(col_lop,lop);
+        Long result=db.insert(Table_name,null,cv);
+        if(result==-1){
+            return false;//insert không thành công
+        }else
+        {
+            return true;
+        }
+
+    }
     public Cursor showData(){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor cursor =db.rawQuery("select * from "+Table_name,null);

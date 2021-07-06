@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //có 3 phần tử sinh viên
         //Truyen arrayadaper qua constructor
-        adapter = new MyListAdapter(this, arrayListSV);//gán data mảng vào adapter mà mình custom
+        adapter = new MyListAdapter(this, arrayListSV,true);//gán data mảng vào adapter mà mình custom
         lvsv.setAdapter(adapter);
         lvsv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                         SinhVien sv=new SinhVien(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
                         arrayListSV.add(sv);
                     }
-                    adapter=new MyListAdapter(this,arrayListSV);
+                    adapter=new MyListAdapter(this,arrayListSV,true);
                     lvsv.setAdapter(adapter);
                 }
             }

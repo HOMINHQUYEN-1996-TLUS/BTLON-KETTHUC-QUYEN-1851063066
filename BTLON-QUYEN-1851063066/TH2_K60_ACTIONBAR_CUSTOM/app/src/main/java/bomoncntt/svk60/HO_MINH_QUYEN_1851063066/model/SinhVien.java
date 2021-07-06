@@ -28,6 +28,7 @@ public class SinhVien {
         this.hinhanh = hinhanh;
     }
 
+
     public String getMasv() {
         return masv;
     }

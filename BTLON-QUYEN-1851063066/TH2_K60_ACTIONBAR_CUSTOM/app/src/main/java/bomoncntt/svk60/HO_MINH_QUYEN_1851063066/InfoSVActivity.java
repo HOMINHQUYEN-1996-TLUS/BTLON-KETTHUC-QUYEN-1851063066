@@ -126,23 +126,38 @@ public class InfoSVActivity extends AppCompatActivity {
                     if (Flag.equals("ADD")) {
                         int selectedId = radioSexGroup.getCheckedRadioButtonId();
                         radioSexButton = (RadioButton) findViewById(selectedId);
-                        String hinhanh = "";
+                        String hinhanh = null;
                         if(bp != null){
                             hinhanh = AllConTrol.BitMapToString(bp);
                         }
-                        Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop,hinhanh);
-                        if (Inserted) {
+                        if(hinhanh==null){
+                            Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop);
+                            if (Inserted) {
 
-                            Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop,hinhanh);
+                            if (Inserted) {
+                                Log.d("tag_im","+"+hinhanh);
+                                Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                     } else {
                         String hinhanh = "";
                         if(bp != null){
                             hinhanh = AllConTrol.BitMapToString(bp);
+                        }
+                        else {
+                            hinhanh = intent.getStringExtra("HINHANH");
                         }
                         int selectedId = radioSexGroup.getCheckedRadioButtonId();
                         radioSexButton = (RadioButton) findViewById(selectedId);
