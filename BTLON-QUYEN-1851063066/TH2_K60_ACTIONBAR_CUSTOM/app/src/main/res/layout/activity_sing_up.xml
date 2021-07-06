@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/aa"
+    tools:context=".SingUpActivity">
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/edt_userSingUp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Điền tên đăng nhập"-->
+    <!--        android:inputType="textPersonName" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/edt_passSingUp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_below="@id/edt_userSingUp"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Nhập MK"-->
+    <!--        android:inputType="textPersonName" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_singUp"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/edt_passSingUP_again"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:text="Đăng Ký" />-->
+
+    <!--    <EditText-->
+    <!--        android:id="@+id/edt_passSingUP_again"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/edt_passSingUp"-->
+    <!--        android:ems="10"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:hint="Nhập Lại Mật Khẩu" />-->
+    <EditText
+        android:id="@+id/edt_userSingUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_email_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Tên Đăng Nhập"
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edt_passSingUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Mật Khẩu"
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_userSingUp" />
+
+    <EditText
+        android:id="@+id/edt_passSingUP_again"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_border"
+        android:drawableStart="@drawable/ic_baseline_lock_24"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:hint="Nhập Lại Mật Khẩu"
+        android:inputType="text"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_passSingUp" />
+
+    <Button
+        android:id="@+id/btn_singUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="70dp"
+        android:background="@drawable/round_bd"
+        android:text="Đăng Ký"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/colorBluedownt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_passSingUP_again" />
+</androidx.constraintlayout.widget.ConstraintLayout>

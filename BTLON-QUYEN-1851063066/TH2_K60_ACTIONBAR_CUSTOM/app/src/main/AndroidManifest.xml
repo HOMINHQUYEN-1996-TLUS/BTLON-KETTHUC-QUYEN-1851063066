@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="bomoncntt.svk60.HO_MINH_QUYEN_1851063066">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/mimap"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TH2_K60_ACTIONBAR_CUSTOM">
+        <activity android:name=".HistoryAccount"/>
+        <activity android:name=".ForgotPassWordActivity" />
+        <activity android:name=".SingUpActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".InfoSVActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

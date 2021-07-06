@@ -1,0 +1,2 @@
+rootProject.name = "TH2_K60_ACTIONBAR_CUSTOM"
+include ':app'
