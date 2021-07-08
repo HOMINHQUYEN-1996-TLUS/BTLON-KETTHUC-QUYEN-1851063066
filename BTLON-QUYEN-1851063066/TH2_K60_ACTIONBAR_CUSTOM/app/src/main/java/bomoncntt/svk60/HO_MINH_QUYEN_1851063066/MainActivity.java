@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mydb = new DatabaseHelper(this);
         arrayListSV=new ArrayList<>();//Khởi tạo mảng lưu các đối tượng
         Log.d("tag","abc");
+        Log.d("tag","abc");
         lvsv = findViewById(R.id.lvsinhvien); // ánh xạ từ listview sang Java
         Cursor cursor =mydb.showData(); //đổ dữ liệu từ trong sqlite ra cursor
 
