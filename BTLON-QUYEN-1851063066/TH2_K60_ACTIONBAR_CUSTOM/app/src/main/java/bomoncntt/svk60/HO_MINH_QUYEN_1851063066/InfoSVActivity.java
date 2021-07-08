@@ -143,7 +143,6 @@ public class InfoSVActivity extends AppCompatActivity {
                         else {
                             Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop,hinhanh);
                             if (Inserted) {
-                                Log.d("tag_im","+"+hinhanh);
                                 Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
 
                             } else {
@@ -175,8 +174,6 @@ public class InfoSVActivity extends AppCompatActivity {
                     startActivity(in);//mở lên cửa sổ MainActivity
                 }
             }
-
-
         });
         btnlamlai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,6 +245,7 @@ public class InfoSVActivity extends AppCompatActivity {
         Log.v("allIntents",""+allIntents.size());
         return chooserIntent;
     }
+
     public Intent getPickImageChooserIntent() {
         // Determine Uri of camera image to save.
         Uri outputFileUri = getCaptureImageOutputUri();
@@ -327,6 +325,7 @@ public class InfoSVActivity extends AppCompatActivity {
         }
 
     }
+
     public Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
         if (data != null) {
@@ -337,6 +336,7 @@ public class InfoSVActivity extends AppCompatActivity {
 
         return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
+
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
         File getImage = getExternalCacheDir();
@@ -345,6 +345,7 @@ public class InfoSVActivity extends AppCompatActivity {
         }
         return outputFileUri;
     }
+
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
 
@@ -356,6 +357,7 @@ public class InfoSVActivity extends AppCompatActivity {
 
         return result;
     }
+
     public boolean hasPermission(String permission) {
         if (AllConTrol.canMakeSmores()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -364,12 +366,14 @@ public class InfoSVActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater=getMenuInflater();
         menuInflater.inflate(R.menu.camera,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();

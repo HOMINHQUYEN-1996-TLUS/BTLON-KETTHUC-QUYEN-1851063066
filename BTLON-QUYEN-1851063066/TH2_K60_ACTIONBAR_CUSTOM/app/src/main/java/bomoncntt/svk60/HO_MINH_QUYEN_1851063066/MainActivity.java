@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
             arrayListSV.add(sv);
 
         }
-        //có 3 phần tử sinh viên
-        //Truyen arrayadaper qua constructor
+
         adapter = new MyListAdapter(this, arrayListSV,true);//gán data mảng vào adapter mà mình custom
         lvsv.setAdapter(adapter);
         lvsv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,24 +93,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    protected void onStop(){
-//        super.onStop();
-//        onBackPressed();
-//    }
+
     private void showD(int i){
         //parttern buider
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle("Thông báo");
         builder.setMessage("Are you sure to delete this item?");
-        //Duong =yes
-
         builder.setPositiveButton("Yes",(dialog, which) -> {
 
             Integer deletekq=mydb.delete(arrayListSV.get(i).getMasv());
             if(deletekq>0) {
                 Toast.makeText(MainActivity.this,"Delete thành công", Toast.LENGTH_SHORT).show();
-                arrayListSV.remove(i);//xóa 1 phần tử trong mảng
+                arrayListSV.remove(i);
                 adapter.notifyDataSetChanged();
 
             }
@@ -119,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,"Delete không thành công", Toast.LENGTH_SHORT).show();
             }
 
-            dialog.dismiss(); //Đóng cửa thông báo
+            dialog.dismiss();
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -130,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert=builder.create();
         alert.show();
     }
+
     private String getStudent(){
         StringBuffer b=new StringBuffer();
         if(StudentCheckedItemList!=null) {
@@ -142,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return b.toString().trim();
     }
+
     private void addCheckListItem(SinhVien user,boolean add){
 
         if(StudentCheckedItemList!=null){
@@ -176,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    //Cho biết là tham chiếu đến menu mình đã tạo actionbar
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater=getMenuInflater();
@@ -184,10 +179,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int itemId=item.getItemId();//lấy tất cả các item mà đã đạt trong item_actionbar
-        if(itemId==R.id.menu_add){ //người dùng nút cộng
+        int itemId=item.getItemId();
+        if(itemId==R.id.menu_add){
             Log.v("add","ok");
             //1 Mở cửa sổ InfoSVActivity
             Intent in=new Intent(this,InfoSVActivity.class);
@@ -258,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void showDiaLog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Thong bao");
