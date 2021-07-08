@@ -2,12 +2,16 @@ package bomoncntt.svk60.HO_MINH_QUYEN_1851063066;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,7 +61,7 @@ public class InfoSVActivity extends AppCompatActivity {
     Uri picUri;
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
-    private ArrayList<String> permissions = new ArrayList<>();
+    private final ArrayList<String> permissions = new ArrayList<>();
     private final static int ALL_PERMISSIONS_RESULT = 107;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,29 @@ public class InfoSVActivity extends AppCompatActivity {
         }else{
             setTitle("Sữa dữ liệu");
         }
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Items
+//                String[] items = {"Camera", "Thư Mục", "Cancel"};
+//                AlertDialog.Builder b = new AlertDialog.Builder(InfoSVActivity.this);
+//                b.setTitle("Tuỳ Chọn");
+//                b.setItems(items, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if(items[which].equals(items[0])){
+//                            openCamera();
+//                        }
+//                        else if(items[which].equals(items[1])){
+//                            openFolder();
+//                        }
+//                        else dialog.dismiss();
+//                    }
+//                });
+//                //Hiển thị dialog
+//                b.show();
+                startActivityForResult(getPickImageChooserIntent(), 200);
+            }
+        });
         btnluu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,6 +247,7 @@ public class InfoSVActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceType")
     private void resetView(){
         txtmasv.requestFocus();
         txtmasv.setText("");
@@ -227,6 +255,7 @@ public class InfoSVActivity extends AppCompatActivity {
         radioSexButton=(RadioButton)findViewById(R.id.radioButtonNam);
         radioSexGroup.check(radioSexButton.getId());
         spinnerlop.setSelection(0);
+        //imageView.setImageDrawable(@drawable/noa);
     }
 
     public Intent getPickImageChooserIntentFile() {
@@ -241,6 +270,33 @@ public class InfoSVActivity extends AppCompatActivity {
             intent.setPackage(res.activityInfo.packageName);
         }
         Intent chooserIntent = Intent.createChooser(galleryIntent, "Select source");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
+        Log.v("allIntents",""+allIntents.size());
+        return chooserIntent;
+    }
+
+    public Intent getPickImageChooserIntentCamera() {
+        // Determine Uri of camera image to save.
+        Uri outputFileUri = getCaptureImageOutputUri();
+        List<Intent> allIntents = new ArrayList<>();
+        PackageManager packageManager = getPackageManager();
+        // collect all camera intents
+        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam) {
+            Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(res.activityInfo.packageName);
+            if (outputFileUri != null) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            }
+        }
+        //allIntents.add(captureIntent);
+        Intent chooserIntent = Intent.createChooser(captureIntent, "Select source");
+        //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, captureIntent);
+
+        // Add all other intents
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
         Log.v("allIntents",""+allIntents.size());
         return chooserIntent;
@@ -263,7 +319,7 @@ public class InfoSVActivity extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             }
         }
-        allIntents.add(0,captureIntent);
+
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
@@ -272,13 +328,16 @@ public class InfoSVActivity extends AppCompatActivity {
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
 
-        }
-        Intent chooserIntent = Intent.createChooser(captureIntent, "Select source");
-        //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, captureIntent);
 
-        // Add all other intents
+        }
+        //allIntents.add(0,captureIntent);
+        allIntents.add(0,captureIntent);
+        Intent chooserIntent = Intent.createChooser(galleryIntent,"Select source");
+        //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, captureIntent);
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-        Log.v("allIntents",""+allIntents.size());
+        // Add all other intents
+        //chooserIntent
+        Log.v("allIntents","++"+allIntents.size());
         return chooserIntent;
     }
 
@@ -378,32 +437,31 @@ public class InfoSVActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.camera) {
-            Log.d("camera1","ok");
-            //mở camera
-            permissions.add(CAMERA);
-            permissionsToRequest = findUnAskedPermissions(permissions);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (permissionsToRequest.size() > 0)
-                    requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
-            }
-            Intent in=getPickImageChooserIntent();
-            startActivityForResult(in, 200);
-
-
+            openCamera();
         }
         if (itemId == R.id.folder) {
-            Log.d("camera1","ok");
-            //mở camera
-            permissions.add(CAMERA);
-            permissionsToRequest = findUnAskedPermissions(permissions);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (permissionsToRequest.size() > 0)
-                    requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
-            }
-
-            startActivityForResult(getPickImageChooserIntentFile(), 200);
-
+            openFolder();
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void openCamera(){
+        permissions.add(CAMERA);
+        permissionsToRequest = findUnAskedPermissions(permissions);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0)
+                requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+        }
+        Intent in=getPickImageChooserIntentCamera();
+        startActivityForResult(in, 200);
+    }
+    private void openFolder(){
+        permissions.add(CAMERA);
+        permissionsToRequest = findUnAskedPermissions(permissions);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0)
+                requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+        }
+
+        startActivityForResult(getPickImageChooserIntentFile(), 200);
     }
 }

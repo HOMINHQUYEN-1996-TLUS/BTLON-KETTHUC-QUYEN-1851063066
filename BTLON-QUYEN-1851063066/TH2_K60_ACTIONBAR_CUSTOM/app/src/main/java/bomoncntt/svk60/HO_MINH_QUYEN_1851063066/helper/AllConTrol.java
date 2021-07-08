@@ -1,14 +1,27 @@
 package bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Spinner;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.Manifest.permission.CAMERA;
 
 
 public class AllConTrol {
