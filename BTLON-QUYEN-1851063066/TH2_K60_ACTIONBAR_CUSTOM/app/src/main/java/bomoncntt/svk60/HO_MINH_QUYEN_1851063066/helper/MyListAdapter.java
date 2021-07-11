@@ -1,6 +1,7 @@
 package bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper;
 import android.app.Activity;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,23 +20,20 @@ public class MyListAdapter extends ArrayAdapter<SinhVien> {
 
     private final Activity context;
     private final ArrayList<SinhVien> listsv;
-    private boolean IMG;
 
     private static class ViewHolder {
         TextView txtMasv;
         TextView txtTensv;
         TextView txtgt;
         TextView txtlop;
-        ImageView imageViewGirl;
-        ImageView imageViewBoy;
+        ImageView imageView;
     }
     //ViewHolder.txtMasv="001"
-    public MyListAdapter(Activity context, ArrayList<SinhVien> data, boolean IMG) {
+    public MyListAdapter(Activity context, ArrayList<SinhVien> data) {
         super(context, R.layout.layout_item_sv, data);
         // TODO Auto-generated constructor stub
         this.context=context;
         this.listsv = data;
-        this.IMG = IMG;
     }
 
     @Override
@@ -54,8 +52,7 @@ public class MyListAdapter extends ArrayAdapter<SinhVien> {
             viewHolder.txtTensv =  convertView.findViewById(R.id.item_txttensv);
             viewHolder.txtgt=convertView.findViewById(R.id.item_txtgt);
             viewHolder.txtlop=convertView.findViewById(R.id.item_txtlop);
-            viewHolder.imageViewBoy=convertView.findViewById(R.id.avartar_boy);
-            viewHolder.imageViewGirl=convertView.findViewById(R.id.avartar_girl);
+            viewHolder.imageView=convertView.findViewById(R.id.avartar);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -66,26 +63,7 @@ public class MyListAdapter extends ArrayAdapter<SinhVien> {
         viewHolder.txtgt.setText(dataModel.getGt());
         viewHolder.txtlop.setText(dataModel.getLop());
         String anhsv = dataModel.getHinhanh();
-        if(IMG){
-            if(anhsv==null){
-                if(dataModel.getGt().equals("Nam")) {
-                    viewHolder.imageViewBoy.setVisibility(View.VISIBLE);
-                    viewHolder.imageViewGirl.setVisibility(View.GONE);
-                }
-                else {
-                    viewHolder.imageViewBoy.setVisibility(View.GONE);
-                    viewHolder.imageViewGirl.setVisibility(View.VISIBLE);
-                }
-            }
-            else {
-                viewHolder.imageViewBoy.setImageBitmap(AllConTrol.StringToBitMap(anhsv));
-                Log.d("yag_im","+####"+anhsv);
-            }
-        }
-        else {
-            viewHolder.imageViewBoy.setVisibility(View.GONE);
-            viewHolder.imageViewGirl.setVisibility(View.GONE);
-        }
+        viewHolder.imageView.setImageBitmap(AllConTrol.StringToBitMap(anhsv));
         return convertView;
 
     };

@@ -25,7 +25,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //chay vô đây trước
 
     }
- //gọi kế tiếp
+
+
+    //gọi kế tiếp
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+Table_name+" (masv TEXT primary key,tensv TEXT, gt TEXT,lop TEXT,hinhanh TEXT)");
@@ -63,22 +65,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(col_gt,gt);
         cv.put(col_lop,lop);
         cv.put(col_image,hinhanh);
-        Long result=db.insert(Table_name,null,cv);
-        if(result==-1){
-            return false;//insert không thành công
-        }else
-        {
-            return true;
-        }
-
-    }
-    public boolean insertData(String masv,String tensv,String gt,String lop){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues cv=new ContentValues();
-        cv.put(col_masv,masv);
-        cv.put(col_tensv,tensv);
-        cv.put(col_gt,gt);
-        cv.put(col_lop,lop);
         Long result=db.insert(Table_name,null,cv);
         if(result==-1){
             return false;//insert không thành công

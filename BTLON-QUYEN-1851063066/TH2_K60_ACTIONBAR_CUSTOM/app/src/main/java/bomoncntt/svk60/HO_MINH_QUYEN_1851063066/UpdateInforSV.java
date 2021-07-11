@@ -44,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.CAMERA;
 
-public class InfoSVActivity extends AppCompatActivity {
+public class UpdateInforSV extends AppCompatActivity  {
 
     private static final int REQUEST_ID_READ_WRITE_PERMISSION = 99;
     private static final int REQUEST_ID_IMAGE_CAPTURE = 100;
@@ -71,10 +71,10 @@ public class InfoSVActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_svactivity);
+        setContentView(R.layout.activity_update_infor_sv);
 
         anhxa();
-
+        txtmasv.setEnabled(false);
         arraylistLop = new ArrayList<String>();
         arraylistLop.add("Khóa 59");
         arraylistLop.add("Khóa 60");
@@ -108,16 +108,16 @@ public class InfoSVActivity extends AppCompatActivity {
             txtmasv.setText(masv);
             txttensv.setText(tensv);
             if (gt.equals("Nam")) {
-                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam);
+                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam_update);
             } else {
-                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNu);
+                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNu_update);
             }
             radioSexGroup.check(radioSexButton.getId());
             selectValue(spinnerlop, lop1);
             imageView.setImageBitmap(AllConTrol.StringToBitMap(hinhanh));
         }
-        if (Flag.equals("ADD")) {
-            setTitle("Thêm mới");
+        if (Flag.equals("EDIT")) {
+            setTitle("Sửa dữ liệu");
         }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,51 +128,49 @@ public class InfoSVActivity extends AppCompatActivity {
         btnluu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((txtmasv.getText().toString().contains(" ")) || (txtmasv.length() == 0)) {
-                    txtmasv.requestFocus();
-                    txtmasv.setError("MASV khong được có khoảng trắng hay bỏ trống");
-                } else if (txttensv.length() == 0) {
+                if (txttensv.length() == 0) {
                     txttensv.requestFocus();
                     txttensv.setError("Khong được bỏ trống tên SV");
                 } else {
-                        int selectedId = radioSexGroup.getCheckedRadioButtonId();
-                        radioSexButton = (RadioButton) findViewById(selectedId);
-                        String hinhanh = "";
+
+                        String hinhanh1 = null;
                         if (bp != null) {
                             Bitmap bMapScaled = AllConTrol.getResizedBitmap(bp,250);
-                            hinhanh = AllConTrol.BitMapToString(bMapScaled);
-                        }else {
-                                hinhanh = getNoavartar();
+                            hinhanh1 = AllConTrol.BitMapToString(bMapScaled);
+                        } else {
+                            if(count == 0) {
+                                hinhanh1 = intent.getStringExtra("HINHANH");
+                            }
+                            else hinhanh1 = getNoavartar();
                         }
-                        Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
-                        if (Inserted) {
-                            Log.d("tag_checkIMG", "Insert Infor" + " " + hinhanh);
-                            Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
+                        int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                        radioSexButton = (RadioButton) findViewById(selectedId);
+                        Boolean Updated = mydb.update(intent.getStringExtra("MASV"), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh1);
+                        if (Updated) {
+                            Log.d("tag_checkIMG", "update Infor" + " " + hinhanh1);
+                            Toast.makeText(UpdateInforSV.this, "Data is Updated", Toast.LENGTH_SHORT).show();
 
                         } else {
-                            Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UpdateInforSV.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
                         }
-                    finish();
-                    Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                    in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //xóa đi cửa sổ parent
-                    startActivity(in);//mở lên cửa sổ MainActivity
+                    }
+                    count = 0;
+                finish();
+                Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //xóa đi cửa sổ parent
+                startActivity(in);//mở lên cửa sổ MainActivity
                 }
-            }
         });
         btnlamlai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 count ++;
-                if (Flag.equals("ADD")) {
-                    resetView();
-                } else {
-                    txttensv.requestFocus();
-                    txttensv.setText("");
-                    radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam);
-                    radioSexGroup.check(radioSexButton.getId());
-                    spinnerlop.setSelection(0);
-                    imageView.setImageBitmap(AllConTrol.StringToBitMap(getNoavartar()));
-                }
+                txttensv.requestFocus();
+                txttensv.setText("");
+                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam_update);
+                radioSexGroup.check(radioSexButton.getId());
+                spinnerlop.setSelection(0);
+                imageView.setImageBitmap(AllConTrol.StringToBitMap(getNoavartar()));
             }
         });
         assert getSupportActionBar() != null;
@@ -180,14 +178,14 @@ public class InfoSVActivity extends AppCompatActivity {
     }
 
     private void anhxa() {
-        imageView = findViewById(R.id.img_avartar);
+        imageView = findViewById(R.id.img_avartar_update);
         mydb = new DatabaseHelper(this);
-        btnluu = (Button) findViewById(R.id.btnluu);
-        btnlamlai = (Button) findViewById(R.id.btnlamlai);
-        txtmasv = (EditText) findViewById(R.id.txtmasv);
-        txttensv = findViewById(R.id.txttensv);
-        radioSexGroup = (RadioGroup) findViewById(R.id.radiogroupsex);
-        spinnerlop = findViewById(R.id.spinnerlop);
+        btnluu = (Button) findViewById(R.id.btnluu_update);
+        btnlamlai = (Button) findViewById(R.id.btnlamlai_update);
+        txtmasv = (EditText) findViewById(R.id.txtmasv_update);
+        txttensv = findViewById(R.id.txttensv_update);
+        radioSexGroup = (RadioGroup) findViewById(R.id.radiogroupsex_update);
+        spinnerlop = findViewById(R.id.spinnerlop_update);
     }
 
     @Override
@@ -422,19 +420,19 @@ public class InfoSVActivity extends AppCompatActivity {
             Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
             if (Inserted) {
                 Log.d("tag_checkIMG", "Insert Infor" + " " + hinhanh);
-                Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateInforSV.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateInforSV.this, "Data is failed", Toast.LENGTH_SHORT).show();
             }
         }
         else if(s.equals("Updated")){
             Boolean Updated = mydb.update(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
             if (Updated) {
-                Toast.makeText(InfoSVActivity.this, "Data is Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateInforSV.this, "Data is Updated", Toast.LENGTH_SHORT).show();
 
             } else {
-                Toast.makeText(InfoSVActivity.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateInforSV.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
             }
         }
     }

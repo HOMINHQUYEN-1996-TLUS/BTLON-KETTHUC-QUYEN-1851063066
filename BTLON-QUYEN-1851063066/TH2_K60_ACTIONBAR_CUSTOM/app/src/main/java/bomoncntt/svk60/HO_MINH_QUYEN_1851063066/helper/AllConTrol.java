@@ -2,18 +2,26 @@ package bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -21,15 +29,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.InfoSVActivity;
+import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.R;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.Manifest.permission.CAMERA;
 
 
 public class AllConTrol {
-
+//    DatabaseHelper mydb = null;
+//    EditText txtmasv, txttensv;
+//    Button btnluu, btnlamlai;
+//    private RadioGroup radioSexGroup;
+//    private RadioButton radioSexButton;
+//    Spinner spinnerlop;
+//    CircleImageView imageView;
     public static String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        ByteArrayOutputStream baos = new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
+        byte [] b = baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
@@ -68,5 +86,13 @@ public class AllConTrol {
     }
     public static boolean canMakeSmores() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+    public static void selectValue(Spinner spinner, Object value) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(value)) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 }

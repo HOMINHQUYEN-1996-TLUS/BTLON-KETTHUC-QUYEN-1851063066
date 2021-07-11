@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TH2_K60_ACTIONBAR_CUSTOM">
-        <activity android:name=".HistoryAccount"/>
+        <activity android:name=".UpdateInforSV"/>
+        <activity android:name=".HistoryAccount" />
         <activity android:name=".ForgotPassWordActivity" />
         <activity android:name=".SingUpActivity" />
         <activity android:name=".MainActivity" />

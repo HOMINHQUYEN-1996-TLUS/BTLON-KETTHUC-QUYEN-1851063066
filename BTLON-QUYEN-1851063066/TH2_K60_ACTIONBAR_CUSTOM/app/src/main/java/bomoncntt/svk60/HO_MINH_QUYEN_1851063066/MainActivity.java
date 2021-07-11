@@ -46,18 +46,15 @@ public class MainActivity extends AppCompatActivity {
         StudentCheckedItemList=new ArrayList<>();
         mydb = new DatabaseHelper(this);
         arrayListSV=new ArrayList<>();//Khởi tạo mảng lưu các đối tượng
-        Log.d("tag","abc");
-        Log.d("tag","abc");
         lvsv = findViewById(R.id.lvsinhvien); // ánh xạ từ listview sang Java
         Cursor cursor =mydb.showData(); //đổ dữ liệu từ trong sqlite ra cursor
 
         while (cursor.moveToNext()) {
             SinhVien sv = new SinhVien(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4));
             arrayListSV.add(sv);
-
         }
 
-        adapter = new MyListAdapter(this, arrayListSV,true);//gán data mảng vào adapter mà mình custom
+        adapter = new MyListAdapter(this, arrayListSV);//gán data mảng vào adapter mà mình custom
         lvsv.setAdapter(adapter);
         lvsv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 sv.setGt(arrayListSV.get(position).getGt());
                 sv.setLop(arrayListSV.get(position).getLop());
                 sv.setHinhanh(arrayListSV.get(position).getHinhanh());
-                Log.d("tagcheck","++"+checkChecked);
+                Log.d("tag_checkIMG","check tu Main"+" "+arrayListSV.get(position).getHinhanh());
                 addCheckListItem(sv,checkChecked);
             }
         });
@@ -230,18 +227,19 @@ public class MainActivity extends AppCompatActivity {
                         SinhVien sv=new SinhVien(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
                         arrayListSV.add(sv);
                     }
-                    adapter=new MyListAdapter(this,arrayListSV,true);
+                    adapter=new MyListAdapter(this,arrayListSV);
                     lvsv.setAdapter(adapter);
                 }
             }
         }else {
+
             if(StudentCheckedItemList!=null){// chọn ít nhất 1 phần tử
                 int size=StudentCheckedItemList.size();//lấy số tự thực sự đã check
                 if(size!=1){
                     showDiaLog();
-                }else {
+                }  else {
                     SinhVien sv=StudentCheckedItemList.get(0);
-                    Intent in = new Intent(this, InfoSVActivity.class);
+                    Intent in = new Intent(MainActivity.this, UpdateInforSV.class);
                     in.putExtra("Flag", "EDIT");
                     in.putExtra("MASV", sv.getMasv());
                     in.putExtra("TENSV", sv.getTensv());

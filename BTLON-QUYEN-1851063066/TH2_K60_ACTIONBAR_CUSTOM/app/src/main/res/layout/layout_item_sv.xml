@@ -122,7 +122,8 @@
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/avartar_boy"
+
+            android:id="@+id/avartar"
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -131,17 +132,7 @@
             android:src="@drawable/noavatar"
             app:civ_border_color="#FFFFFF"
             app:civ_border_width="5dp" />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/avartar_girl"
-            android:layout_width="120dp"
-            android:visibility="gone"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/girl"
-            app:civ_border_color="#FFFFFF"
-            app:civ_border_width="5dp" />
+
 
     </LinearLayout>
 
