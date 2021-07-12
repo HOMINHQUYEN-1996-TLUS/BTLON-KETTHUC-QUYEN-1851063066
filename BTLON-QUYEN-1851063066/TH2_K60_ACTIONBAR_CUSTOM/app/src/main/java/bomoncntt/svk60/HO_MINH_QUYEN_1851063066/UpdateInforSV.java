@@ -2,17 +2,13 @@ package bomoncntt.svk60.HO_MINH_QUYEN_1851063066;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -132,7 +127,6 @@ public class UpdateInforSV extends AppCompatActivity  {
                     txttensv.requestFocus();
                     txttensv.setError("Khong được bỏ trống tên SV");
                 } else {
-
                         String hinhanh1 = null;
                         if (bp != null) {
                             Bitmap bMapScaled = AllConTrol.getResizedBitmap(bp,250);
@@ -140,8 +134,12 @@ public class UpdateInforSV extends AppCompatActivity  {
                         } else {
                             if(count == 0) {
                                 hinhanh1 = intent.getStringExtra("HINHANH");
+                                Log.d("tag_check_vitri","GT = count = 0");
                             }
-                            else hinhanh1 = getNoavartar();
+                            else {
+                                    hinhanh1 = getNoavartar();
+                                    Log.d("tag_check_vitri","GT = nam");
+                                }
                         }
                         int selectedId = radioSexGroup.getCheckedRadioButtonId();
                         radioSexButton = (RadioButton) findViewById(selectedId);
@@ -153,18 +151,20 @@ public class UpdateInforSV extends AppCompatActivity  {
                         } else {
                             Toast.makeText(UpdateInforSV.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
                         }
-                    }
                     count = 0;
-                finish();
-                Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //xóa đi cửa sổ parent
-                startActivity(in);//mở lên cửa sổ MainActivity
+                    finish();
+                    Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                    in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //xóa đi cửa sổ parent
+                    startActivity(in);//mở lên cửa sổ MainActivity
+                    }
+
                 }
         });
         btnlamlai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 count ++;
+                Log.d("tag_d","d = "+count);
                 txttensv.requestFocus();
                 txttensv.setText("");
                 radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam_update);
@@ -404,13 +404,19 @@ public class UpdateInforSV extends AppCompatActivity  {
             if (permissionsToRequest.size() > 0)
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
-
         startActivityForResult(getPickImageChooserIntentFile(), 200);
     }
 
     private String getNoavartar(){
         String hinhanh;
         Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.noavatar)).getBitmap();
+        hinhanh = AllConTrol.BitMapToString(bMapScaled);
+        return hinhanh;
+    }
+
+    private String getGirl(){
+        String hinhanh;
+        Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.girl)).getBitmap();
         hinhanh = AllConTrol.BitMapToString(bMapScaled);
         return hinhanh;
     }

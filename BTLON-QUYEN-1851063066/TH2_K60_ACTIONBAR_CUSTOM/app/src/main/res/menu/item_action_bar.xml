@@ -22,5 +22,10 @@
         android:icon="@drawable/icon_logout"
         android:title="Logout"
         app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/history"
+        android:title="Lịch Sử"
+        android:icon="@drawable/ic_history"
+        app:showAsAction="always|withText" />
 
 </menu>

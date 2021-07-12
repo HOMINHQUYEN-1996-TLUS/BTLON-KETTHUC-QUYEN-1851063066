@@ -66,8 +66,10 @@ public class ForgotPassWordActivity extends AppCompatActivity {
         txt_textView7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 Intent in = new Intent(ForgotPassWordActivity.this, LoginActivity.class);
                 startActivity(in);
+
             }
         });
     }

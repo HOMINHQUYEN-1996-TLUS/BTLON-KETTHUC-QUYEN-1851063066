@@ -201,6 +201,10 @@ public class MainActivity extends AppCompatActivity {
             Intent in = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(in);
         }
+        else if(itemId==R.id.history){
+            Intent in = new Intent(MainActivity.this, HistoryAccount.class);
+            startActivity(in);
+        }
         else if(itemId==R.id.menu_delete)
         {
             if(StudentCheckedItemList!=null){// chọn ít nhất 1 phần tử

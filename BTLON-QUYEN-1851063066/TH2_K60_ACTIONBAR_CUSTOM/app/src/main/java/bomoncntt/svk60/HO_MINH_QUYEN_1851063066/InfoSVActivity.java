@@ -2,17 +2,13 @@ package bomoncntt.svk60.HO_MINH_QUYEN_1851063066;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -45,6 +40,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.Manifest.permission.CAMERA;
 
 public class InfoSVActivity extends AppCompatActivity {
+
+
 
     private static final int REQUEST_ID_READ_WRITE_PERMISSION = 99;
     private static final int REQUEST_ID_IMAGE_CAPTURE = 100;
@@ -74,6 +71,8 @@ public class InfoSVActivity extends AppCompatActivity {
         setContentView(R.layout.activity_info_svactivity);
 
         anhxa();
+
+
 
         arraylistLop = new ArrayList<String>();
         arraylistLop.add("Khóa 59");
@@ -413,6 +412,12 @@ public class InfoSVActivity extends AppCompatActivity {
     private String getNoavartar(){
         String hinhanh;
         Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.noavatar)).getBitmap();
+        hinhanh = AllConTrol.BitMapToString(bMapScaled);
+        return hinhanh;
+    }
+    private String getGirl(){
+        String hinhanh;
+        Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.girl)).getBitmap();
         hinhanh = AllConTrol.BitMapToString(bMapScaled);
         return hinhanh;
     }

@@ -194,10 +194,6 @@ public class LoginActivity extends AppCompatActivity {
             });
             builder.show();
         }
-        else if(itemId == R.id.history){
-            Intent in = new Intent(LoginActivity.this, HistoryAccount.class);
-            startActivity(in);
-        }
         return super.onOptionsItemSelected(item);
     }
 }
