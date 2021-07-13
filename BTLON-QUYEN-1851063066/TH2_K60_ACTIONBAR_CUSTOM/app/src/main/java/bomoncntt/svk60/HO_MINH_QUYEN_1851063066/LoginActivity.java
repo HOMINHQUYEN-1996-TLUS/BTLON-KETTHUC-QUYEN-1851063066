@@ -161,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         check_save = findViewById(R.id.check_save);
         btn_dangky = findViewById(R.id.btn_dangky);
         txt_quenMK = findViewById(R.id.txt_quenMK);
+        Log.d("tag_kiemtra","kiemtra ok");
     }
     private void writeMessage(String u,String p){
         try {
