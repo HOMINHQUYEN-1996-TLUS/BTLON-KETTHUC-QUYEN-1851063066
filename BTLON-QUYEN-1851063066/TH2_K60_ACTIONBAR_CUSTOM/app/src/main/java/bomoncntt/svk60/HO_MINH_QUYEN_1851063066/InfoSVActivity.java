@@ -158,16 +158,6 @@ public class InfoSVActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
-    private void selectValue(Spinner spinner, Object value) {
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).equals(value)) {
-                spinner.setSelection(i);
-                break;
-            }
-        }
-    }
-
     //@SuppressLint("ResourceType")
     private void resetView() {
         txtmasv.requestFocus();

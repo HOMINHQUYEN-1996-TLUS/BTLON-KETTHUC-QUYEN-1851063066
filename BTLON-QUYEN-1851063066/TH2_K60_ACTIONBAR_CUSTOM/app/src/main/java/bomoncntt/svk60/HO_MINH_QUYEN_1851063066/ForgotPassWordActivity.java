@@ -19,7 +19,6 @@ import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.model.Account;
 public class ForgotPassWordActivity extends AppCompatActivity {
     EditText edt_getUser;
     Button btn_getPassWord;
-    TextView txt_textView7,edt_getPass;
     String thongbao = "Bạn cần nhập usernam cần tìm mk. Sau đó ấn vào nút Lấy Mật Khẩu. Nếu user chính xác thì Pass sẽ hiện ra ở dòng Pass Word. Sau khi có được Mật Khẩu và user bạn có thể ấn vào nút Về Trang Đăng Nhập để Đăng nhập vào hệ thống";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +61,6 @@ public class ForgotPassWordActivity extends AppCompatActivity {
                 }
             }
         });
-
-//        txt_textView7.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent in = new Intent(ForgotPassWordActivity.this, LoginActivity.class);
-//                startActivity(in);
-//                finish();
-//            }
-//        });
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

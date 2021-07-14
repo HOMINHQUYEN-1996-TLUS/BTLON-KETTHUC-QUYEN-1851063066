@@ -73,65 +73,55 @@ public class LoginActivity extends AppCompatActivity {
                 String user=txt_username.getText().toString();
                 String pass=txt_password.getText().toString();
                 //Kiểm tra u và p có tồn tại trong user csdl ?
-                if(helper.serchUser(user)){
-                    if(pass.equals(helper.serchPass(user))) {
-                        writeMessage(user,pass);//ghi lại lịch sử đăng nhập
-                        if (check_save.isChecked()) {
-                            //lưu thông tin xuống sharepreferences
-                            editor = pref.edit(); //chỉnh sửa file  MYPREFS.xml
-                            editor.putString("USERNAME", user); //ghi thông tin vào fields USERNAME='admin'
-                            editor.putString("PASSWORD", pass);
-                            editor.commit();
-
-                        } else {
-
-                            //xóa preferences
-                            editor = pref.edit();
-                            editor.clear();
-                            editor.commit();
-                        }
-                        Account ac = new Account(user,pass);
-                        //showAccount();
-                        Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(in);
-                        finish();
-                    }
-                    else {
-                            builder.setTitle("Thông báo");
-                            builder.setMessage("mật khẩu không chính xác");
-                            builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                            builder.show();
-                        }
+                if(user.length()==0){
+                    txt_username.requestFocus();
+                    txt_username.setError("VUI LÒNG KHÔNG BỎ TRỐNG USERNAME");
+                }
+                else if(pass.length()==0){
+                    txt_password.requestFocus();
+                    txt_password.setError("VUI LÒNG KHÔNG BỎ TRỐNG PASS");
                 }
                 else {
-                    if(user.equals("1851063066")){
-                        builder.setTitle("Thông báo");
-                        builder.setMessage("Bạn đang đăng nhập acc mặc định của Thầy Nhã à. Không được đâu. Hãy đăng ký 1 acc mới ngay nào :))))))");
-                        builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
+                    if(helper.serchUser(user)){
+                        if(pass.equals(helper.serchPass(user))) {
+                            writeMessage(user,pass);//ghi lại lịch sử đăng nhập
+                            if (check_save.isChecked()) {
+                                //lưu thông tin xuống sharepreferences
+                                editor = pref.edit(); //chỉnh sửa file  MYPREFS.xml
+                                editor.putString("USERNAME", user); //ghi thông tin vào fields USERNAME='admin'
+                                editor.putString("PASSWORD", pass);
+                                editor.commit();
+
+                            } else {
+
+                                //xóa preferences
+                                editor = pref.edit();
+                                editor.clear();
+                                editor.commit();
                             }
-                        });
-                        builder.show();
+                            Account ac = new Account(user,pass);
+                            //showAccount();
+                            Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(in);
+                            finish();
+                        }
+                        else {
+                            String mes = "MẬT KHẨU KHÔNG CHÍNH XÁC";
+                            ShowBuilder(mes);
+                        }
                     }
                     else {
-                        builder.setTitle("Thông báo");
-                        builder.setMessage("Bạn chưa có TK ? Hãy ấn nút Đăng Ký bên dưới để tạo cho mình 1 TK");
-                        builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        builder.show();
-                    }
+                        if(user.equals("1851063066")){
+                            String mes = "Bạn đang đăng nhập acc mặc định của Thầy Nhã à. Không được đâu. Hãy đăng ký 1 acc mới ngay nào :))))))";
 
+                            ShowBuilder(mes);
+                        }
+                        else {
+                            String mes = "Bạn chưa có TK ? Hãy ấn nút Đăng Ký bên dưới để tạo cho mình 1 TK";
+                            ShowBuilder(mes);
+                        }
+
+                    }
                 }
 
 
@@ -195,5 +185,18 @@ public class LoginActivity extends AppCompatActivity {
             builder.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void ShowBuilder(String mes){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("THÔNG BÁO");
+        builder.setMessage(mes);
+        builder.setPositiveButton("TÔI BIẾT RỒI", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 }

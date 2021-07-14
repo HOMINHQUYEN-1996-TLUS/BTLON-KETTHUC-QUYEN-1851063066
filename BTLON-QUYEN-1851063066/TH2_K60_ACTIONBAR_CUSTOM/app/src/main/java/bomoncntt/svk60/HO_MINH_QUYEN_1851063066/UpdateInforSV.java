@@ -286,7 +286,6 @@ public class UpdateInforSV extends AppCompatActivity  {
         }
         allIntents.add(0, captureIntent);
         Intent chooserIntent = Intent.createChooser(galleryIntent, "Select source");
-        //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, captureIntent);
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
         return chooserIntent;
     }
