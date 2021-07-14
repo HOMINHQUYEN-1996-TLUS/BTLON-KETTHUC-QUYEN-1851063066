@@ -46,8 +46,6 @@ public class InfoSVActivity extends AppCompatActivity {
     private static final int REQUEST_ID_READ_WRITE_PERMISSION = 99;
     private static final int REQUEST_ID_IMAGE_CAPTURE = 100;
 
-    int count = 0;
-
     Button buttonImage;
     CircleImageView imageView;
     Spinner spinnerlop;
@@ -70,9 +68,8 @@ public class InfoSVActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_svactivity);
 
+        setTitle("Thêm mới");
         anhxa();
-
-
 
         arraylistLop = new ArrayList<String>();
         arraylistLop.add("Khóa 59");
@@ -95,29 +92,6 @@ public class InfoSVActivity extends AppCompatActivity {
                 lop = "";
             }
         });
-        Intent intent = getIntent(); //lấy data từ MainActivity gửi sang gồm 4 biến
-        String masv = intent.getStringExtra("MASV");
-        String tensv = intent.getStringExtra("TENSV");
-        String gt = intent.getStringExtra("GT");
-        String lop1 = intent.getStringExtra("LOP");
-        String hinhanh = intent.getStringExtra("HINHANH");
-        String Flag = intent.getStringExtra("Flag");
-
-        if (!masv.equals("")) {
-            txtmasv.setText(masv);
-            txttensv.setText(tensv);
-            if (gt.equals("Nam")) {
-                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam);
-            } else {
-                radioSexButton = (RadioButton) findViewById(R.id.radioButtonNu);
-            }
-            radioSexGroup.check(radioSexButton.getId());
-            selectValue(spinnerlop, lop1);
-            imageView.setImageBitmap(AllConTrol.StringToBitMap(hinhanh));
-        }
-        if (Flag.equals("ADD")) {
-            setTitle("Thêm mới");
-        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,17 +135,7 @@ public class InfoSVActivity extends AppCompatActivity {
         btnlamlai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count ++;
-                if (Flag.equals("ADD")) {
-                    resetView();
-                } else {
-                    txttensv.requestFocus();
-                    txttensv.setText("");
-                    radioSexButton = (RadioButton) findViewById(R.id.radioButtonNam);
-                    radioSexGroup.check(radioSexButton.getId());
-                    spinnerlop.setSelection(0);
-                    imageView.setImageBitmap(AllConTrol.StringToBitMap(getNoavartar()));
-                }
+               resetView();
             }
         });
         assert getSupportActionBar() != null;
@@ -415,32 +379,5 @@ public class InfoSVActivity extends AppCompatActivity {
         hinhanh = AllConTrol.BitMapToString(bMapScaled);
         return hinhanh;
     }
-    private String getGirl(){
-        String hinhanh;
-        Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.girl)).getBitmap();
-        hinhanh = AllConTrol.BitMapToString(bMapScaled);
-        return hinhanh;
-    }
 
-    private void insertUpdate(String s, String hinhanh){
-        if(s.equals("Inserted")){
-            Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
-            if (Inserted) {
-                Log.d("tag_checkIMG", "Insert Infor" + " " + hinhanh);
-                Toast.makeText(InfoSVActivity.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(InfoSVActivity.this, "Data is failed", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else if(s.equals("Updated")){
-            Boolean Updated = mydb.update(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
-            if (Updated) {
-                Toast.makeText(InfoSVActivity.this, "Data is Updated", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(InfoSVActivity.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

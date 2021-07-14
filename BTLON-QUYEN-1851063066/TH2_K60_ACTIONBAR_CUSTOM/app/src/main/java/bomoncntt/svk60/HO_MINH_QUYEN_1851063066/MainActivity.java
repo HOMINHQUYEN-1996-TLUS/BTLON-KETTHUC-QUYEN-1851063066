@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("QLSV");
         checked = findViewById(R.id.check_save);
-        pref=getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        StudentCheckedItemList=new ArrayList<>();
+        pref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        StudentCheckedItemList = new ArrayList<>();
         mydb = new DatabaseHelper(this);
         arrayListSV=new ArrayList<>();//Khởi tạo mảng lưu các đối tượng
         lvsv = findViewById(R.id.lvsinhvien); // ánh xạ từ listview sang Java
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 sv.setGt(arrayListSV.get(position).getGt());
                 sv.setLop(arrayListSV.get(position).getLop());
                 sv.setHinhanh(arrayListSV.get(position).getHinhanh());
-                Log.d("tag_checkIMG","check tu Main"+" "+arrayListSV.get(position).getHinhanh());
                 addCheckListItem(sv,checkChecked);
             }
         });

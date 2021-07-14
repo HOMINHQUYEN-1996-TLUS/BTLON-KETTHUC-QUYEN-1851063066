@@ -29,6 +29,9 @@ public class HistoryAccount extends AppCompatActivity {
         setTitle("List Account");
         historyAccount = findViewById(R.id.List_Account);
         showAccount();
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void showAccount() {
@@ -36,40 +39,15 @@ public class HistoryAccount extends AppCompatActivity {
         arrayListAccount = new ArrayList<>();
         Cursor cursor = accountDb.showAccount();
         while(cursor.moveToNext()){
-            Account acc =new Account(cursor.getString(0),cursor.getString(1));
+            Account acc = new Account(cursor.getString(0),cursor.getString(1));
             arrayListAccount.add(acc);
         }
         adapterAccount = new AccountAdapter(this,arrayListAccount);
         historyAccount.setAdapter(adapterAccount);
     }
-
-    private void showD(int i){
-        android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(this);
-        builder.setTitle("Thông báo");
-        builder.setMessage("Bạn muốn xóa Account này ?");
-
-        builder.setPositiveButton("Yes",(dialog, which) -> {
-
-            Integer deletekq=accountDb.delete(arrayListAccount.get(i).getUsername());
-            if(deletekq>0) {
-                Toast.makeText(HistoryAccount.this,"Delete thành công", Toast.LENGTH_SHORT).show();
-                arrayListAccount.remove(i);
-                adapterAccount.notifyDataSetChanged();
-
-            }
-            else{
-                Toast.makeText(HistoryAccount.this,"Delete không thành công", Toast.LENGTH_SHORT).show();
-            }
-
-            dialog.dismiss();
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss(); //Đóng cửa thông báo
-            }
-        });
-        android.app.AlertDialog alert=builder.create();
-        alert.show();
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

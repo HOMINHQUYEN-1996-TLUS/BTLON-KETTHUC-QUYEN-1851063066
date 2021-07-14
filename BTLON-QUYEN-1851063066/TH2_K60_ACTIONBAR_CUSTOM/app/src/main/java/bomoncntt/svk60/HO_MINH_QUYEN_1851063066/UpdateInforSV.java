@@ -284,13 +284,10 @@ public class UpdateInforSV extends AppCompatActivity  {
 
 
         }
-        //allIntents.add(0,captureIntent);
         allIntents.add(0, captureIntent);
         Intent chooserIntent = Intent.createChooser(galleryIntent, "Select source");
         //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, captureIntent);
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-        // Add all other intents
-        //chooserIntent
         return chooserIntent;
     }
 
@@ -412,34 +409,5 @@ public class UpdateInforSV extends AppCompatActivity  {
         Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.noavatar)).getBitmap();
         hinhanh = AllConTrol.BitMapToString(bMapScaled);
         return hinhanh;
-    }
-
-    private String getGirl(){
-        String hinhanh;
-        Bitmap bMapScaled = ((BitmapDrawable)getResources().getDrawable(R.drawable.girl)).getBitmap();
-        hinhanh = AllConTrol.BitMapToString(bMapScaled);
-        return hinhanh;
-    }
-
-    private void insertUpdate(String s, String hinhanh){
-        if(s.equals("Inserted")){
-            Boolean Inserted = mydb.insertData(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
-            if (Inserted) {
-                Log.d("tag_checkIMG", "Insert Infor" + " " + hinhanh);
-                Toast.makeText(UpdateInforSV.this, "Data is Inserted", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(UpdateInforSV.this, "Data is failed", Toast.LENGTH_SHORT).show();
-            }
-        }
-        else if(s.equals("Updated")){
-            Boolean Updated = mydb.update(txtmasv.getText().toString(), txttensv.getText().toString(), radioSexButton.getText().toString(), lop, hinhanh);
-            if (Updated) {
-                Toast.makeText(UpdateInforSV.this, "Data is Updated", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(UpdateInforSV.this, "Data is Update failed", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 }

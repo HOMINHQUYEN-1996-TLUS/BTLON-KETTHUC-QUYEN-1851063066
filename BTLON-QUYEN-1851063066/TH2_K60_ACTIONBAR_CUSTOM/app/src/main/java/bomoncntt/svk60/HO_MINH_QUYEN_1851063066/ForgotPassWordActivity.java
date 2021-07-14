@@ -29,7 +29,7 @@ public class ForgotPassWordActivity extends AppCompatActivity {
 
         edt_getUser = findViewById(R.id.edt_getUser);
         btn_getPassWord = findViewById(R.id.btn_getPassWord);
-        txt_textView7 = findViewById(R.id.textView7);
+        //txt_textView7 = findViewById(R.id.textView7);
 
         UserControl helper = new UserControl(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -63,15 +63,29 @@ public class ForgotPassWordActivity extends AppCompatActivity {
             }
         });
 
-        txt_textView7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                Intent in = new Intent(ForgotPassWordActivity.this, LoginActivity.class);
-                startActivity(in);
+//        txt_textView7.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent in = new Intent(ForgotPassWordActivity.this, LoginActivity.class);
+//                startActivity(in);
+//                finish();
+//            }
+//        });
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-            }
-        });
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     @Override

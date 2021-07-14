@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/menu_add"
-        android:icon="@drawable/icon_add"
+        android:icon="@drawable/ic_baseline_add_24"
         android:title="Thêm"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/menu_delete"
-        android:icon="@drawable/icon_delete"
+        android:icon="@drawable/ic_baseline_delete_24"
         android:title="Xóa"
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/menu_edit"
-        android:icon="@drawable/icon_edit"
+        android:icon="@drawable/ic_baseline_edit_24"
         android:title="Sửa"
         app:showAsAction="always|withText" />
     <item
