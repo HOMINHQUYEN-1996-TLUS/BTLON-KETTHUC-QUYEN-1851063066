@@ -28,7 +28,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper.AccountAdapter;
-import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper.AllConTrol;
 import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.helper.UserControl;
 import bomoncntt.svk60.HO_MINH_QUYEN_1851063066.model.Account;
 
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             "Nếu đã có TK nhưng quên MK hãy ấn vào nút Quên Mật Khẩu ?" +
             "Phía dưới có list Account hiện có. Bạn có thể xóa 1 account bằng cách nhấn giữ vào nó" +
             "Nếu bạn không muốn đăng nhập lại mỗi khi mở app hãy check vào ô Nhớ Đăng Nhập";
-
+    int vitri = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +57,15 @@ public class LoginActivity extends AppCompatActivity {
         UserControl helper = new UserControl(this);
         pref=getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         //Đọc thông tin từ share ra
-        String username = pref.getString("USERNAME","");
-        String password = pref.getString("PASSWORD","");
+        String username=pref.getString("USERNAME","");
+        String password=pref.getString("PASSWORD","");
         Log.v("username",username);
-
         if(!username.equals("")&&!password.equals("")){
 
             Intent in=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(in);
             finish();
         }
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,59 +73,70 @@ public class LoginActivity extends AppCompatActivity {
                 String user=txt_username.getText().toString();
                 String pass=txt_password.getText().toString();
                 //Kiểm tra u và p có tồn tại trong user csdl ?
-                if(user.length()==0){
-                    txt_username.requestFocus();
-                    txt_username.setError("Vui lòng không bỏ trống trường này");
-                }
-                else if(pass.length()==0){
-                    txt_password.requestFocus();
-                    txt_password.setError("Vui lòng không bỏ trống trường này");
-                }
-                else {
-                    if(helper.serchUser(user)){
-                        if(pass.equals(helper.serchPass(user))) {
-                            writeMessage(user,pass);//ghi lại lịch sử đăng nhập
-                            if (check_save.isChecked()) {
-                                //lưu thông tin xuống sharepreferences
-                                editor = pref.edit(); //chỉnh sửa file  MYPREFS.xml
-                                editor.putString("USERNAME", user); //ghi thông tin vào fields USERNAME='admin'
-                                editor.putString("PASSWORD", pass);
-                                editor.commit();
+                if(helper.serchUser(user)){
+                    if(pass.equals(helper.serchPass(user))) {
+                        writeMessage(user,pass);//ghi lại lịch sử đăng nhập
+                        if (check_save.isChecked()) {
+                            //lưu thông tin xuống sharepreferences
+                            editor = pref.edit(); //chỉnh sửa file  MYPREFS.xml
+                            editor.putString("USERNAME", user); //ghi thông tin vào fields USERNAME='admin'
+                            editor.putString("PASSWORD", pass);
+                            editor.commit();
 
-                            } else {
+                        } else {
 
-                                //xóa preferences
-                                editor = pref.edit();
-                                editor.clear();
-                                editor.commit();
-                            }
-                            Account ac = new Account(user,pass);
-                            //showAccount();
-                            Intent in = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(in);
-                            finish();
+                            //xóa preferences
+                            editor = pref.edit();
+                            editor.clear();
+                            editor.commit();
                         }
-                        else {
-                            String mes = "MẬT KHẨU KHÔNG CHÍNH XÁC , " +
-                                    "                  NẾU QUÊN HÃY CLICK VÀO QUÊN MẬT KHẨU PHÍA DƯỚI";
-                            showBuilder(mes);
-                        }
+                        Account ac = new Account(user,pass);
+                        //showAccount();
+                        Intent in = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(in);
+                        finish();
                     }
                     else {
-                        if(user.equals("1851063066")){
-                            String mes = "Bạn đang đăng nhập acc mặc định của Thầy Nhã à. Không được đâu. Hãy đăng ký 1 acc mới ngay nào :))))))";
-                            showBuilder(mes);
+                            builder.setTitle("Thông báo");
+                            builder.setMessage("mật khẩu không chính xác");
+                            builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            builder.show();
                         }
-                        else {
-                            String mes = "Bạn chưa có TK ? Hãy ấn nút Đăng Ký bên dưới để tạo cho mình 1 TK";
-                            showBuilder(mes);
-                        }
-
-                    }
                 }
+                else {
+                    if(user.equals("1851063066")){
+                        builder.setTitle("Thông báo");
+                        builder.setMessage("Bạn đang đăng nhập acc mặc định của Thầy Nhã à. Không được đâu. Hãy đăng ký 1 acc mới ngay nào :))))))");
+                        builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
+                    else {
+                        builder.setTitle("Thông báo");
+                        builder.setMessage("Bạn chưa có TK ? Hãy ấn nút Đăng Ký bên dưới để tạo cho mình 1 TK");
+                        builder.setPositiveButton("Tôi biết rồi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
+
+                }
+
+
             }
         });
-
         btn_dangky.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(in);
             }
         });
-
         txt_quenMK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         btn_dangky = findViewById(R.id.btn_dangky);
         txt_quenMK = findViewById(R.id.txt_quenMK);
     }
-
     private void writeMessage(String u,String p){
         try {
             FileOutputStream fileout = openFileOutput("datalogin.txt", MODE_APPEND);
@@ -172,7 +178,6 @@ public class LoginActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.info, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int itemId=item.getItemId();//lấy tất cả các item mà đã đạt trong item_actionbar
@@ -190,18 +195,5 @@ public class LoginActivity extends AppCompatActivity {
             builder.show();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showBuilder(String mes){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("THÔNG BÁO");
-        builder.setMessage(mes);
-        builder.setPositiveButton("TÔI BIẾT RỒI", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
     }
 }
